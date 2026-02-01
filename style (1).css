@@ -1,0 +1,754 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0a0a1a;
+  color: #e0e0ff;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #1a1a3a;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #4fc3f7;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #8ba3c7;
+  font-weight: 300;
+}
+
+.log-line {
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  animation: fadeIn 0.3s ease;
+}
+
+.log-line.error { color: #ff5252; }
+.log-line.info { color: #4fc3f7; }
+.log-line.success { color: #69f0ae; }
+.log-line.warning { color: #ffd740; }
+.log-line.combat { color: #ffab91; font-weight: bold; }
+
+/* Lobby */
+.lobby {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-section {
+  background: rgba(16, 22, 58, 0.8);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 1px solid #2a3a5a;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.text-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #2a3a5a;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  background: rgba(10, 15, 35, 0.8);
+  color: #e0e0ff;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 5px rgba(79, 195, 247, 0.5);
+}
+
+.button-group {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-wiki {
+  display: inline-block;
+  background: linear-gradient(135deg, #8e44ad, #6c3483);
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 50px; /* Forme de pilule */
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid #a569bd;
+  box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.btn-wiki:hover {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(142, 68, 173, 0.6);
+  color: white;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #757575, #616161);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #616161, #424242);
+}
+
+.divider {
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #2a3a5a;
+}
+
+.divider span {
+  background: #0a0a1a;
+  padding: 0 1rem;
+  color: #8ba3c7;
+}
+
+.status-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+  background: rgba(42, 58, 90, 0.6);
+  color: #e0e0ff;
+}
+
+/* Game Area */
+.game-area {
+  max-width: none;
+  margin: 0 auto;
+}
+
+.turn-indicator {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background: rgba(16, 22, 58, 0.6);
+  border: 1px solid #2a3a5a;
+  transition: color 0.3s;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-status {
+  font-family: 'Consolas', 'Monaco', monospace; /* Police style terminal */
+  font-size: 0.9rem;
+  color: #e0e0ff;
+  padding: 1rem;
+  background: rgba(10, 10, 20, 0.95); /* Plus sombre pour le contraste */
+  border-radius: 8px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  border: 1px solid #4fc3f7;
+  height: 150px; /* Hauteur fixe */
+  overflow-y: auto; /* Scroll vertical */
+  text-align: left; /* Alignement à gauche comme un chat */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  scroll-behavior: smooth;
+}
+
+.game-status::-webkit-scrollbar {
+  width: 8px;
+}
+.game-status::-webkit-scrollbar-track {
+  background: #0a0a1a;
+}
+.game-status::-webkit-scrollbar-thumb {
+  background: #2a3a5a;
+  border-radius: 4px;
+}
+
+/* Grille de jeu 30x30 */
+.game-grid-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    overflow: auto;
+    max-height: 70vh;
+}
+
+.grille {
+    display: grid;
+    grid-template-columns: repeat(30, 25px);
+    grid-template-rows: repeat(25, 25px);
+    gap: 1px;
+    background-color: #1a1a3a;
+    padding: 2px;
+    border-radius: 4px;
+    border: 1px solid #2a3a5a;
+    width: fit-content;
+    position: relative; /* Pour les animations absolues */
+}
+
+.case {
+    width: 25px !important;
+    height: 25px !important;
+    background-color: #0f142f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    position: relative;
+    box-sizing: border-box;
+}
+
+
+.case:hover {
+  background-color: #1a2342;
+}
+
+.case.selected {
+  border-color: #4fc3f7;
+  background-color: rgba(79, 195, 247, 0.2);
+}
+
+.case.visible {
+  border-color: #4caf50;
+}
+
+/* --- ZONES DE DANGER ASTEROIDE (NOUVEAU) --- */
+.case.danger-zone {
+  background-color: rgba(231, 76, 60, 0.3) !important;
+  border: 1px dashed #e74c3c !important;
+  animation: danger-pulse 1s infinite alternate;
+}
+
+.case.danger-zone::after {
+  content: '⚠️';
+  font-size: 0.8rem;
+  position: absolute;
+  z-index: 5;
+}
+
+@keyframes danger-pulse {
+  0% { box-shadow: inset 0 0 5px rgba(231, 76, 60, 0.3); }
+  100% { box-shadow: inset 0 0 15px rgba(231, 76, 60, 0.7); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.case.vaisseau-j0 {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+  z-index: 10;
+}
+
+.case.vaisseau-j1 {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+  z-index: 10;
+}
+
+.case.drone-attaque {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+  box-shadow: 0 0 8px rgba(255, 152, 0, 0.5);
+}
+
+.case.drone-reconnaissance {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: white;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+/* Actions */
+.actions-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.btn-action {
+  padding: 0.75rem 1rem;
+  border: 1px solid #2a3a5a;
+  background: rgba(16, 22, 58, 0.8);
+  color: #e0e0ff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.btn-action:hover:not(:disabled) {
+  background: rgba(33, 150, 243, 0.3);
+  border-color: #2196f3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.btn-action:disabled {
+  background: rgba(42, 58, 90, 0.4);
+  color: #6b7b9c;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* NOUVEAU STYLE BOUTON DANGER */
+.btn-danger {
+    background: linear-gradient(135deg, #c0392b, #8e44ad);
+    border-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(231, 76, 60, 0.4);
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: linear-gradient(135deg, #e74c3c, #9b59b6);
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
+    transform: scale(1.02);
+}
+
+/* Informations joueurs */
+.players-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.player-card {
+  background: rgba(16, 22, 58, 0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 1px solid #2a3a5a;
+}
+
+.player-card.active {
+  border-left: 4px solid #2196f3;
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+}
+
+.player-card h3 {
+  margin-bottom: 1rem;
+  color: #4fc3f7;
+  font-weight: 500;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #8ba3c7;
+  min-width: 60px;
+}
+
+.stat-bar {
+  flex: 1;
+  height: 8px;
+  background-color: #1a1a3a;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #45a049);
+  transition: width 0.3s;
+}
+
+.stat-fill.energy {
+  background: linear-gradient(90deg, #2196f3, #1976d2);
+}
+
+.stat-value {
+  font-size: 0.9rem;
+  color: #e0e0ff;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* Code de partie */
+.game-code-panel {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(16, 22, 58, 0.9);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  border: 1px solid #2a3a5a;
+  backdrop-filter: blur(10px);
+}
+
+.game-code-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.code-label {
+  font-size: 0.9rem;
+  color: #8ba3c7;
+}
+
+.game-code {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #4fc3f7;
+  font-weight: 600;
+}
+
+.btn-copy {
+  background: rgba(42, 58, 90, 0.6);
+  border: 1px solid #2a3a5a;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #e0e0ff;
+}
+
+.btn-copy:hover {
+  background: rgba(33, 150, 243, 0.3);
+  border-color: #2196f3;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .grille {
+    grid-template-columns: repeat(30, 20px);
+    grid-template-rows: repeat(25, 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+  
+  .grille {
+    grid-template-columns: repeat(30, 15px);
+    grid-template-rows: repeat(25, 15px);
+    font-size: 0.5rem;
+  }
+  
+  .actions-panel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem;
+  }
+  
+  .btn-action {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .players-info {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .game-code-panel {
+    bottom: 1rem;
+    padding: 0.75rem 1rem;
+  }
+  
+  .game-code-content {
+    gap: 0.5rem;
+  }
+}
+
+/* Styles pour les éléments de jeu */
+.case.tour {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color: white;
+  box-shadow: 0 0 8px rgba(155, 89, 182, 0.5);
+}
+
+.case.tour.controle-j0 {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  box-shadow: 0 0 12px rgba(33, 150, 243, 0.7);
+}
+
+.case.tour.controle-j1 {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  box-shadow: 0 0 12px rgba(244, 67, 54, 0.7);
+}
+
+.case.obstacle:hover::after {
+    content: 'Obstacle';
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    z-index: 100;
+}
+
+.case.decouverte {
+  border: 1px dashed #ff9800;
+  background-color: rgba(255, 152, 0, 0.1);
+}
+
+.case.drone-defense {
+  background: linear-gradient(135deg, #2980b9, #2471a3);
+  color: white;
+  box-shadow: 0 0 8px rgba(41, 128, 185, 0.5);
+}
+
+.case.drone-controle {
+  background: linear-gradient(135deg, #8e44ad, #7d3c98);
+  color: white;
+  box-shadow: 0 0 8px rgba(142, 68, 173, 0.5);
+}
+
+.stat-zones {
+  font-size: 0.9rem;
+  color: #9b59b6;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  text-align: center;
+  padding: 0.25rem;
+  background: rgba(155, 89, 182, 0.1);
+  border-radius: 4px;
+}
+
+.stat-bouclier {
+  font-size: 0.8rem;
+  color: #2196f3;
+  font-weight: bold;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+/* Cases de déplacement possibles */
+.case.deplacement-possible {
+  background-color: rgba(33, 150, 243, 0.3);
+  border: 2px dashed #2196f3;
+  cursor: pointer;
+}
+
+.case.deplacement-possible:hover {
+  background-color: rgba(33, 150, 243, 0.5);
+}
+
+
+/* Animation pour les tours contrôlées */
+@keyframes pulse-tour {
+  0% {
+    box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(33, 150, 243, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(33, 150, 243, 0);
+  }
+}
+
+.tour-nouvelle-controle {
+  animation: pulse-tour 2s ease-in-out;
+}
+
+/* Drones sur les tours */
+.case.sur-tour {
+  border: 2px solid #ff9800;
+  box-shadow: 0 0 15px #ff9800;
+}
+
+.case.drone-reconnaissance.sur-tour {
+  background: linear-gradient(45deg, #4caf50, #ff9800);
+}
+
+.case.drone-controle.sur-tour {
+  background: linear-gradient(45deg, #8e44ad, #2196f3);
+  border: 2px solid #ff9800;
+  box-shadow: 0 0 20px #ff9800;
+}
+
+/* --- ANIMATION ASTEROIDE MISE À JOUR --- */
+.asteroide-animation {
+  animation: chute-asteroide 1.5s ease-in forwards;
+}
+
+@keyframes chute-asteroide {
+  0% {
+    transform: translateY(-200px) translateX(50px) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  95% {
+    transform: translateY(0) translateX(0) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0; /* Disparaît à l'impact pour laisser voir les dégâts */
+  }
+}
+
+/* Animation victoire */
+@keyframes victoire-animation {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 20px rgba(76, 175, 80, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+.victoire {
+  animation: victoire-animation 2s ease-in-out infinite;
+}
+
+.case.obstacle {
+    background-image: url('images/c.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.case.obstacle::before {
+    content: none;
+}
+
+.case.tour-vitesse {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    box-shadow: 0 0 10px rgba(243, 156, 18, 0.7);
+}
+
+.case.tour-puissance {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+}
+
+.case.tour-defense {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+}
+
+.case.tour-vision {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.7);
+}
+
+.bonus-list {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.bonus-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-card .stats {
+    position: relative;
+}
+
+.player-card .bonus-list {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.2rem;
+    border-radius: 4px;
+    border: 1px solid #2a3a5a;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Jeu Spatial - Fondation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Jeu Spatial</h1>
+    </header>
+
+    <main class="lobby">
+      <div class="form-section">
+        <div class="input-group">
+          <input type="text" id="playerName" placeholder="Votre nom" class="text-input">
+        </div>
+
+        <div class="button-group">
+          <button onclick="createGame()" class="btn btn-primary">Créer une partie</button>
+        </div>
+
+        <div class="divider">
+          <span>ou</span>
+        </div>
+
+        <div class="input-group">
+          <input type="text" id="gameId" placeholder="Code de la partie" class="text-input">
+        </div>
+
+        <div class="button-group">
+          <button onclick="joinGame()" class="btn btn-secondary">Rejoindre une partie</button>
+        </div>
+      </div>
+
+      <div id="status" class="status-message"></div>
+    </main>
+  </div>
+  <div style="text-align: center; margin-top: 2rem;">
+    <a href="wiki.html" class="btn-wiki">📚 Consulter le Wiki</a>
+</div>
+
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki - Jeu Spatial Fondation</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-panel: rgba(16, 22, 58, 0.95);
+            --text-main: #e0e0ff;
+            --text-muted: #8ba3c7;
+            --accent-blue: #4fc3f7;
+            --accent-purple: #9b59b6;
+            --accent-green: #4caf50;
+            --accent-orange: #ff9800;
+            --accent-red: #f44336;
+            --border: #2a3a5a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 3rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            background: radial-gradient(circle at center, rgba(155, 89, 182, 0.1) 0%, transparent 70%);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent-purple);
+            text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 1rem;
+            margin: 2.5rem 0 1.5rem 0;
+            background: linear-gradient(90deg, rgba(79, 195, 247, 0.1), transparent);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: var(--text-main);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #757575, #616161);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #858585, #717171);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .cost-badge {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--accent-orange);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            float: right;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table th {
+            background: rgba(79, 195, 247, 0.15);
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Highlights */
+        .win-condition {
+            border: 2px solid var(--accent-green);
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), transparent);
+        }
+
+        .danger-card {
+            border: 1px solid var(--accent-red);
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), transparent);
+        }
+
+        /* Drone specifics */
+        .drone-a { color: var(--accent-orange); font-weight: bold; }
+        .drone-d { color: var(--accent-blue); font-weight: bold; }
+        .drone-r { color: var(--accent-green); font-weight: bold; }
+        .drone-c { color: var(--accent-purple); font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+    <div class="nav-bar">
+        <span>📚 <strong>Wiki du Jeu</strong> <small style="color:var(--text-muted)">(Version v2.0)</small></span>
+        <a href="index.html" class="btn-back">← Retour au Jeu</a>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Manuel du Pilote</h1>
+            <p>Règles officielles, coûts énergétiques et stratégies de combat.</p>
+        </header>
+
+        <section>
+            <h2>🎯 Objectifs de Victoire</h2>
+            <div class="card-grid">
+                <div class="card win-condition">
+                    <span class="card-icon">👑</span>
+                    <h3>Domination Territoriale</h3>
+                    <p>Contrôlez <strong>3 des 4 Tours</strong> simultanément. La victoire est instantanée dès que la 3ème tour est capturée.</p>
+                </div>
+                <div class="card win-condition">
+                    <span class="card-icon">💥</span>
+                    <h3>Annihilation</h3>
+                    <p>Réduisez les points de vie (PV) du vaisseau adverse à <strong>0</strong> via vos tirs, vos drones ou les astéroïdes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🚀 Votre Vaisseau</h2>
+            <p>Gestion de l'énergie et statistiques de base.</p>
+            <table class="data-table">
+                <tr>
+                    <th>Statistique</th>
+                    <th>Valeur</th>
+                    <th>Détails</th>
+                </tr>
+                <tr>
+                    <td>❤️ Vie (PV)</td>
+                    <td>100</td>
+                    <td>Si 0 = Défaite.</td>
+                </tr>
+                <tr>
+                    <td>⚡ Énergie (PE)</td>
+                    <td>100 Max</td>
+                    <td>Se régénère de <strong>+3 PE</strong> à la fin de chaque tour.</td>
+                </tr>
+                <tr>
+                    <td>👁️ Vision</td>
+                    <td>4 Cases</td>
+                    <td>Rayon de base pour voir à travers le brouillard de guerre.</td>
+                </tr>
+            </table>
+
+            <h3>Actions du Vaisseau</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <span class="cost-badge">5 ⚡</span>
+                    <h3>Déplacement</h3>
+                    <p>Déplace le vaisseau d'une case adjacente (pas de diagonale). Bloqué par les obstacles et les autres vaisseaux.</p>
+                </div>
+                <div class="card">
+                    <span class="cost-badge">20 ⚡</span>
+                    <h3>Tir Laser (Standard)</h3>
+                    <p><strong>Portée :</strong> 8 cases<br><strong>Dégâts :</strong> 10 PV</p>
+                    <p>Attaque classique à longue portée.</p>
+                </div>
+                <div class="card danger-card">
+                    <span class="cost-badge">50 ⚡</span>
+                    <h3>Canon Plasma (Lourd)</h3>
+                    <p><strong>Portée :</strong> 6 cases<br><strong>Dégâts :</strong> 35 PV</p>
+                    <p>Attaque dévastatrice à courte portée. Consomme la moitié de votre réserve maximale !</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🤖 Les Drones</h2>
+            <p>Vous pouvez avoir jusqu'à <strong>3 drones actifs</strong> simultanément. Ils sont déployés sur une case adjacente libre.</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Drone</th>
+                        <th>Coût</th>
+                        <th>Durée</th>
+                        <th>Effets & Stratégie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="drone-a">Attaque (A)</td>
+                        <td><strong>15 ⚡</strong></td>
+                        <td>5 Tours</td>
+                        <td>
+                            • <strong>Soutien de tir :</strong> Si vous tirez sur une cible à portée du drone (6 cases), il ajoute <strong>+3 dégâts</strong>.<br>
+                            • <strong>Attaque auto :</strong> Peut infliger des dégâts mineurs si activé.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="drone-d">Défense (D)</td>
+                        <td><strong>10 ⚡</strong></td>
+                        <td>5 Tours</td>
+                        <td>
+                            • <strong>Bouclier :</strong> Peut générer un champ de protection.<br>
+                            • <strong>Réduction :</strong> Réduit les dégâts reçus de 3 (tirs) ou 5 (astéroïdes) pour les alliés à 3 cases max.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="drone-r">Recon (R)</td>
+                        <td><strong>5 ⚡</strong></td>
+                        <td>5 Tours</td>
+                        <td>
+                            • <strong>Éclaireur :</strong> Grande vision (8 cases).<br>
+                            • <strong>Mobile :</strong> Se déplace aléatoirement pour dévoiler la carte.<br>
+                            • Faible coût, idéal pour explorer.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="drone-c">Contrôle (C)</td>
+                        <td><strong>25 ⚡</strong></td>
+                        <td>Unique</td>
+                        <td>
+                            • <strong>Capture :</strong> Doit être lancé <strong>SUR une tour</strong> libre.<br>
+                            • <strong>Usage unique :</strong> Disparaît immédiatement après avoir capturé la tour.<br>
+                            • Ne peut pas être lancé sur une tour déjà occupée.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>🏰 Tours & Bonus</h2>
+            <p>Contrôler une tour offre un avantage passif permanent tant qu'elle est en votre possession.</p>
+            
+            <div class="card-grid">
+                <div class="card" style="border-top: 4px solid #f39c12;">
+                    <h3>⚡ Tour Vitesse</h3>
+                    <p>Votre déplacement passe à <strong>2 cases</strong> par action (au lieu d'1).</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #e74c3c;">
+                    <h3>💥 Tour Puissance</h3>
+                    <p>Augmente les dégâts de base de vos tirs de <strong>+1</strong>.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #3498db;">
+                    <h3>🛡️ Tour Résistance</h3>
+                    <p>Confère <strong>20% de résistance</strong> aux dégâts reçus.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #9b59b6;">
+                    <h3>👁️ Tour Vision</h3>
+                    <p>Augmente votre champ de vision de <strong>+2 cases</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>☄️ Dangers Environnementaux</h2>
+            <div class="card danger-card">
+                <h3>Pluie d'Astéroïdes (Alertes)</h3>
+                <p>L'univers est instable. Des zones rouges apparaissent sur la carte pour signaler un impact imminent.</p>
+                <ul>
+                    <li><strong>⚠️ Alerte :</strong> Une zone rouge apparaît 1 tour avant l'impact. Fuyez cette zone !</li>
+                    <li><strong>💥 Impact :</strong> Frappe en croix (Centre + 4 cases adjacentes).</li>
+                    <li><strong>Dégâts :</strong> Massifs (25 à 35+ PV). Peut détruire instantanément les drones.</li>
+                    <li><strong>Escalade :</strong> La fréquence et le nombre d'astéroïdes augmentent au fil de la partie.</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Jeu Spatial - Fondation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Jeu Spatial</h1>
+      <p class="subtitle">Tour <span id="turnNumber">1</span></p>
+      <div style="text-align: center; margin-bottom: 1rem;">
+      </div>
+    </header>
+
+    <main class="game-area">
+      <div class="game-header">
+          <div id="turnIndicator" class="turn-indicator">Chargement...</div>
+          
+          <div id="gameStatus" class="game-status">
+              <div class="log-line info">Système initialisé. En attente de connexion...</div>
+          </div>
+        </div>
+
+      <div class="game-grid-container">
+        <div id="grille" class="grille">
+          </div>
+      </div>
+
+      <div class="actions-panel">
+        <button id="btnDeplacer" class="btn-action" disabled>Déplacer (5⚡)</button>
+        <button id="btnTirer" class="btn-action" disabled>Tir Laser (20⚡)</button>
+        <button id="btnTirLourd" class="btn-action btn-danger" disabled>Canon Plasma (50⚡)</button>
+        
+        <button id="btnDroneAttaque" class="btn-action" disabled>D. Attaque (15⚡)</button>
+        <button id="btnDroneDefense" class="btn-action" disabled>D. Défense (10⚡)</button>
+        <button id="btnDroneRecon" class="btn-action" disabled>D. Recon (5⚡)</button>
+        <button id="btnDroneControle" class="btn-action" disabled>D. Contrôle (25⚡)</button>
+        <button id="btnFinTour" class="btn-action" disabled>Fin de tour</button>
+      </div>
+
+      <div class="players-info">
+        <div id="player1Info" class="player-card">
+          <h3 id="player1Name">Joueur 1</h3>
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-label">Vie</span>
+              <div class="stat-bar">
+                <div class="stat-fill" id="p1VieBar" style="width: 100%"></div>
+              </div>
+              <span class="stat-value" id="p1Vie">100</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Énergie</span>
+              <div class="stat-bar">
+                <div class="stat-fill energy" id="p1EnergieBar" style="width: 100%"></div>
+              </div>
+              <span class="stat-value" id="p1Energie">100</span>
+            </div>
+            <div id="p1Zones" class="stat-zones">Zones: 0/3</div>
+            <div id="p1Bonus" class="bonus-container"></div>
+          </div>
+        </div>
+
+        <div id="player2Info" class="player-card">
+          <h3 id="player2Name">Joueur 2</h3>
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-label">Vie</span>
+              <div class="stat-bar">
+                <div class="stat-fill" id="p2VieBar" style="width: 100%"></div>
+              </div>
+              <span class="stat-value" id="p2Vie">100</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Énergie</span>
+              <div class="stat-bar">
+                <div class="stat-fill energy" id="p2EnergieBar" style="width: 100%"></div>
+              </div>
+              <span class="stat-value" id="p2Energie">100</span>
+            </div>
+            <div id="p2Zones" class="stat-zones">Zones: 0/3</div>
+            <div id="p2Bonus" class="bonus-container"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="gameCodeContainer" class="game-code-panel">
+    <div class="game-code-content">
+      <span class="code-label">Code de partie :</span>
+      <code id="gameCodeDisplay" class="game-code"></code>
+      <button id="copyCodeBtn" class="btn-copy">📋</button>
+    </div>
+  </div>
+
+  <script src="gameLogic.js"></script>
+</body>
+</html>
