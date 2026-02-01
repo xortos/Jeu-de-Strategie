@@ -1,0 +1,1 @@
+Développement d'un jeu de stratégie 1v1 au tour par tour. Architecture structurée en Programmation Orientée Objet (pour les vaisseaux et drônes). Utilisation d'AJAX pour l'actualisation en temps réel, gestion des sessions PHP et stockage de l'état de la partie dans un fichier JSON.
